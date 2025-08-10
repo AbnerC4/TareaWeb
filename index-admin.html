@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inicio — Panel Minimal</title>
+    <meta name="description" content="Ejercicios con diseño minimalista y accesible." />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="favicon.ico">
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+    <!-- Estilos base (puede moverlos a css/estilos-admin.css) -->
+    <style>
+      :root {
+        --bg: #ffffff;
+        --fg: #0f172a;
+        --muted: #64748b;
+        --band: #f1f5f9;
+        --card: #ffffff;
+        --border: #e2e8f0;
+        --brand: #3b82f6;
+        --focus: #22c55e;
+        --shadow: 0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.1);
+      }
+      [data-theme="dark"] {
+        --bg: #0b1220;
+        --fg: #e5e7eb;
+        --muted: #94a3b8;
+        --band: #0f172a;
+        --card: #0b1220;
+        --border: #1f2937;
+        --brand: #60a5fa;
+        --focus: #22c55e;
+        --shadow: 0 2px 8px rgba(0,0,0,.35);
+      }
+      * { box-sizing: border-box }
+      html, body { height: 100% }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        color: var(--fg);
+        background: var(--bg);
+        line-height: 1.5;
+      }
+      a { color: inherit; text-decoration: none }
+      .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+        clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+      }
+      .skip-link {
+        position: absolute; left: 0.5rem; top: -40px; background: var(--fg); color: var(--bg);
+        padding: .5rem .75rem; border-radius: .5rem; z-index: 1000; transition: top .2s;
+      }
+      .skip-link:focus { top: .5rem; outline: 3px solid var(--focus) }
+
+      /* Topbar */
+      .topbar {
+        position: sticky; top: 0; z-index: 50;
+        display: flex; align-items: center; gap: .75rem;
+        padding: .5rem .75rem; background: var(--band); border-bottom: 1px solid var(--border);
+      }
+      .btn-icon {
+        display: inline-grid; place-items: center;
+        width: 2.25rem; height: 2.25rem; border: 1px solid var(--border);
+        background: var(--card); border-radius: .5rem; box-shadow: var(--shadow);
+        font-size: 1rem; cursor: pointer;
+      }
+      .btn-icon:focus-visible, .btn:focus-visible, a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px }
+      .brand { display: inline-flex; align-items: center; gap: .5rem; font-weight: 800; letter-spacing: .2px }
+      .brand .mark { width: .9rem; height: .9rem; border-radius: 2px; background: var(--brand); display: inline-block }
+      .topbar-actions { margin-left: auto; display: flex; gap: .5rem }
+
+      /* Layout */
+      .layout { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 56px) }
+      .sidebar {
+        border-right: 1px solid var(--border); background: var(--band); padding: .75rem;
+      }
+      .nav { list-style: none; padding: 0; margin: 0 }
+      .nav-section { margin: .5rem .5rem  .25rem; color: var(--muted); font-size: .85rem }
+      .nav a {
+        display: flex; align-items: center; gap: .5rem;
+        padding: .5rem .6rem; border-radius: .5rem;
+      }
+      .nav a:hover { background: var(--card) }
+      .nav a[aria-current="page"] { background: var(--card); border: 1px solid var(--border) }
+      .icon { width: 1.2rem; text-align: center }
+
+      .content { padding: 1rem; }
+      .breadcrumb { color: var(--muted); font-size: .9rem; }
+      .breadcrumb ol { display: flex; gap: .5rem; list-style: none; padding: 0; margin: 0 }
+      .breadcrumb li+li::before { content: "›"; margin: 0 .25rem }
+
+      /* Cards grid */
+      .grid { display: grid; gap: 1rem }
+      .cards-10 { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) }
+      .card {
+        background: var(--card); border: 1px solid var(--border); border-radius: .8rem; padding: 1rem; box-shadow: var(--shadow);
+        display: grid; gap: .5rem;
+      }
+      .card h2 { margin: 0; font-size: 1.05rem }
+      .exercise-d { margin: 0; color: var(--muted) }
+      .exercise-f { margin-top: .25rem }
+      .btn {
+        display: inline-block; background: var(--brand); color: #fff; padding: .5rem .75rem; border-radius: .5rem; font-weight: 600;
+      }
+      .btn:hover { filter: brightness(1.05) }
+
+      /* Footer y utilidades */
+      .footer { border-top: 1px solid var(--border); padding: 1rem; text-align: center; color: var(--muted) }
+      .to-top {
+        position: fixed; right: 1rem; bottom: 1rem; opacity: 0; pointer-events: none;
+        transform: translateY(8px); transition: opacity .2s, transform .2s;
+      }
+      .to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0) }
+
+      /* Responsive */
+      @media (max-width: 960px) {
+        .layout { grid-template-columns: 1fr }
+        .sidebar {
+          position: fixed; inset: 56px auto 0 0; width: 82%; max-width: 320px; transform: translateX(-110%);
+          transition: transform .2s ease; box-shadow: var(--shadow); z-index: 40;
+        }
+        .sidebar.open { transform: translateX(0) }
+        .content { padding: 1rem .75rem }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * { transition: none !important; scroll-behavior: auto !important }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#contenido" class="skip-link">Saltar al contenido</a>
+
+    <!-- Topbar -->
+    <header class="topbar" role="banner">
+      <button
+        id="sidebarToggle"
+        class="btn-icon"
+        aria-label="Alternar menú lateral"
+        aria-controls="sidebar"
+        aria-expanded="false">☰</button>
+    </header>
+
+    <!-- Layout -->
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside id="sidebar" class="sidebar" aria-label="Menú lateral">
+        <nav aria-label="Navegación principal">
+          <ul class="nav" role="list">
+            <li class="nav-section">Navegación</li>
+            <li><a href="#" aria-current="page"><span class="icon" aria-hidden="true">🏠</span><span>Inicio</span></a></li>
+            <li><a href="#ejercicios"><span class="icon" aria-hidden="true">🧩</span><span>Ejercicios</span></a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <main id="contenido" class="content" role="main">
+        <nav aria-label="Ruta de navegación" class="breadcrumb">
+          <ol>
+            <li><a href="#">Inicio</a></li>
+            <li class="current" aria-current="page">Ejercicios</li>
+          </ol>
+        </nav>
+
+        <h1 style="margin:.25rem 0 1rem">Índice de ejercicios</h1>
+
+        <section id="ejercicios" class="grid cards-10" aria-labelledby="titulo-ejercicios">
+          <h2 id="titulo-ejercicios" class="sr-only">Listado de ejercicios</h2>
+
+          <!-- Tarjeta 1 -->
+          <article class="card exercise">
+            <header class="exercise-h">
+              <h3><a href="Ejercicio1/ejercicio1.html">Ejercicio 1: Blog personal</a></h3>
+            </header>
+            <p class="exercise-d">Maqueta de blog con HTML semántico, Grid/Flex y JS.</p>
+            <footer class="exercise-f">
+              <a class="btn" href="Ejercicio1/ejercicio1.html" aria-label="Abrir Ejercicio 1: Blog personal">Abrir</a>
+            </footer>
+          </article>
+
+          <!-- Tarjeta 2 -->
+          <article class="card exercise">
+            <header class="exercise-h">
+              <h3><a href="Ejercicio2/index.html">Ejercicio 2: Tienda online (eCommerce)</a></h3>
+            </header>
+            <p class="exercise-d">Catálogo básico, carrito ficticio y botón de compra.</p>
+            <footer class="exercise-f">
+              <a class="btn" href="Ejercicio2/index.html" aria-label="Abrir Ejercicio 2: Tienda online (eCommerce)">Abrir</a>
+            </footer>
+          </article>
+
+          <!-- Tarjeta 3 -->
+          <article class="card exercise">
+            <header class="exercise-h">
+              <h3><a href="Ejercicio3/index.html">Ejercicio 3: Landing page de producto</a></h3>
+            </header>
+            <p class="exercise-d">Sección hero, CTA y formulario de contacto.</p>
+            <footer class="exercise-f">
+              <a class="btn" href="Ejercicio3/index.html" aria-label="Abrir Ejercicio 3: Landing page de producto">Abrir</a>
+            </footer>
+          </article>
+
+          <!-- Tarjeta 4 -->
+          <article class="card exercise">
+            <header class="exercise-h">
+              <h3><a href="Ejercicio4/index.html">Ejercicio 4: Portafolio de diseñador gráfico</a></h3>
+            </header>
+            <p class="exercise-d">Galería de trabajos, bio y enlaces sociales.</p>
+            <footer class="exercise-f">
+              <a class="btn" href="Ejercicio4/index.html" aria-label="Abrir Ejercicio 4: Portafolio de diseñador gráfico">Abrir</a>
+            </footer>
+          </article>
+
+          <!-- Tarjeta 5 -->
+          <article class="card exercise">
+            <header class="exercise-h">
+              <h3><a href="Ejercicio5/index.html">Ejercicio 5: Sitio institucional de universidad</a></h3>
+            </header>
+            <p class="exercise-d">Oferta académica, eventos y noticias.</p>
+            <footer class="exercise-f">
+              <a class="btn" href="Ejercicio5/index.html" aria-label="Abrir Ejercicio 5: Sitio institucional de universidad">Abrir</a>
+            </footer>
+          </article>
+
+          <!-- Tarjeta 6 -->
+          <article class="card exercise">
+            <header class="exercise-h">
+              <h3><a href="Ejercicio6/index.html">Ejercicio 6: Web de restaurante</a></h3>
+            </header>
+            <p class="exercise-d">Menú del día, reservas y mapa.</p>
+            <footer class="exercise-f">
+              <a class="btn" href="Ejercicio6/index.html" aria-label="Abrir Ejercicio 6: Web de restaurante">Abrir</a>
+            </footer>
+          </article>
+
+          <!-- Tarjeta 7 -->
+          <article class="card exercise">
+            <header class="exercise-h">
+              <h3><a href="Ejercicio7/index.html">Ejercicio 7: Agencia de marketing</a></h3>
+            </header>
+            <p class="exercise-d">Servicios, casos y formulario de cotización.</p>
+            <footer class="exercise-f">
+              <a class="btn" href="Ejercicio7/index.html" aria-label="Abrir Ejercicio 7: Agencia de marketing">Abrir</a>
+            </footer>
+          </article>
+
+          <!-- Tarjeta 8 -->
+          <article class="card exercise">
+            <header class="exercise-h">
+              <h3><a href="Ejercicio8/index.html">Ejercicio 8: Página de inicio para app móvil</a></h3>
+            </header>
+            <p class="exercise-d">Capturas, beneficios y enlaces de descarga.</p>
+            <footer class="exercise-f">
+              <a class="btn" href="Ejercicio8/index.html" aria-label="Abrir Ejercicio 8: Página de inicio para app móvil">Abrir</a>
+            </footer>
+          </article>
+
+          <!-- Tarjeta 9 -->
+          <article class="card exercise">
+            <header class="exercise-h">
+              <h3><a href="Ejercicio9/index.html">Ejercicio 9: Noticias tecnológicas</a></h3>
+            </header>
+            <p class="exercise-d">Listado de artículos con filtros y lectura.</p>
+            <footer class="exercise-f">
+              <a class="btn" href="Ejercicio9/index.html" aria-label="Abrir Ejercicio 9: Noticias tecnológicas">Abrir</a>
+            </footer>
+          </article>
+
+          <!-- Tarjeta 10 -->
+          <article class="card exercise">
+            <header class="exercise-h">
+              <h3><a href="Ejercicio10/index.html">Ejercicio 10: Formulario de inscripción</a></h3>
+            </header>
+            <p class="exercise-d">Formulario validado con JavaScript.</p>
+            <footer class="exercise-f">
+              <a class="btn" href="Ejercicio10/index.html" aria-label="Abrir Ejercicio 10: Formulario de inscripción">Abrir</a>
+            </footer>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer" role="contentinfo">
+      <p>&copy; <span id="year"></span> © Todos los derechos reservados.</p>
+    </footer>
+
+    <button id="toTop" class="btn-icon to-top" aria-label="Volver arriba" hidden>↑</button>
+
+    <!-- Script (puede moverlo a js/admin.js con defer) -->
+    <script>
+      (function () {
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const toTop = document.getElementById('toTop');
+
+        // Año dinámico (con fallback si JS deshabilitado)
+        const y = document.getElementById('year');
+        if (y) y.textContent = new Date().getFullYear();
+
+        // Tema: respeta preferencia almacenada o del SO
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        root.setAttribute('data-theme', initialTheme);
+        themeToggle.setAttribute('aria-pressed', String(initialTheme === 'dark'));
+
+        themeToggle.addEventListener('click', () => {
+          const current = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', current);
+          localStorage.setItem('theme', current);
+          themeToggle.setAttribute('aria-pressed', String(current === 'dark'));
+        });
+
+        // Sidebar móvil accesible
+        const updateSidebarA11y = (open) => {
+          sidebar.classList.toggle('open', open);
+          sidebarToggle.setAttribute('aria-expanded', String(open));
+          if (open) sidebar.focus({ preventScroll: true });
+        };
+        sidebarToggle.addEventListener('click', () => {
+          const isOpen = sidebar.classList.contains('open');
+          updateSidebarA11y(!isOpen);
+        });
+        // Cierre con Escape
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+            updateSidebarA11y(false);
+            sidebarToggle.focus();
+          }
+        });
+
+        // Botón "volver arriba"
+        const onScroll = () => {
+          const show = window.scrollY > 240;
+          toTop.classList.toggle('show', show);
+          toTop.hidden = !show;
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Mejora: indicar foco visible al navegar con teclado
+        function handleFirstTab(e) {
+          if (e.key === 'Tab') {
+            document.body.classList.add('user-tabbing');
+            window.removeEventListener('keydown', handleFirstTab);
+          }
+        }
+        window.addEventListener('keydown', handleFirstTab);
+      })();
+    </script>
+    <noscript>
+      <style>
+        /* Asegurar legibilidad si JS está deshabilitado */
+        .sidebar { transform: none !important; position: static !important; width: auto !important }
+        #toTop { display: none !important }
+      </style>
+    </noscript>
+  </body>
+</html>

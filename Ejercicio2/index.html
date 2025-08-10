@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tienda — Maqueta eCommerce</title>
+    <meta name="description" content="Maqueta funcional de tienda online con HTML5, CSS3 y JavaScript." />
+    <link rel="stylesheet" href="estilos.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-grid">
+        <a class="brand" href="#" aria-label="Inicio">
+          <span class="brand__logo">🛒</span>
+          <span class="brand__text">Mi Tienda</span>
+        </a>
+
+        <form id="searchForm" class="search" role="search" aria-label="Buscar productos" novalidate>
+          <input id="searchInput" type="search" placeholder="Buscar productos..." aria-label="Buscar" />
+          <button class="btn" type="submit" aria-label="Ejecutar búsqueda">Buscar</button>
+        </form>
+
+        <nav class="site-nav" aria-label="Principal">
+          <ul class="menu">
+            <li><a class="is-active" href="../index-admin.html">Inicio</a></li>
+            <li><a href="#catalogo">Catálogo</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </nav>
+
+        <button id="cartToggle" class="btn-icon" aria-label="Abrir carrito">🧺 <span id="cartCount" class="badge">0</span></button>
+        <button id="themeToggle" class="btn-icon" aria-label="Cambiar tema">◑</button>
+        <button class="btn-icon nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menú">☰</button>
+      </div>
+    </header>
+
+    <main class="container layout">
+      <section class="hero card">
+        <h1>Encuentre sus productos favoritos</h1>
+        <p>Catálogo con precios ficticios y carrito de demostración.</p>
+        <a href="#catalogo" class="btn">Ver productos</a>
+      </section>
+
+      <section id="catalogo" class="catalogo">
+        <header class="catalogo__header">
+          <h2>Catálogo</h2>
+          <div class="filters">
+            <label>Ordenar:
+              <select id="sortSelect" aria-label="Ordenar productos">
+                <option value="relevance">Relevancia</option>
+                <option value="price-asc">Precio: menor a mayor</option>
+                <option value="price-desc">Precio: mayor a menor</option>
+              </select>
+            </label>
+          </div>
+        </header>
+
+        <section class="grid-products" aria-label="Listado de productos">
+  <!-- Auriculares -->
+  <article class="product card" data-price="997.02" data-name="Auriculares Pro">
+    <img
+      src="https://images.unsplash.com/photo-1713707343787-94c85c3ec8b0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Auriculares inalámbricos negros sobre escritorio"
+      loading="lazy" decoding="async" />
+    <h3 class="product__title">Auriculares Pro</h3>
+    <p class="product__price">Q 997.02</p>
+    <button class="btn add-to-cart" data-id="p1">Agregar</button>
+  </article>
+
+  <!-- Mouse -->
+  <article class="product card" data-price="382.73" data-name="Mouse Inalámbrico">
+    <img
+      src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=2067&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Mouse inalámbrico negro sobre mesa de madera"
+      loading="lazy" decoding="async" />
+    <h3 class="product__title">Mouse Inalámbrico</h3>
+    <p class="product__price">Q 382.73</p>
+    <button class="btn add-to-cart" data-id="p2">Agregar</button>
+  </article>
+
+  <!-- Laptop 14” -->
+  <article class="product card" data-price="6895.33" data-name="Laptop 14”">
+    <img
+      src="https://images.unsplash.com/photo-1646927282949-3df51e5bd3f4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Laptop de 14 pulgadas en mesa, vista lateral"
+      loading="lazy" decoding="async" />
+    <h3 class="product__title">Laptop 14”</h3>
+    <p class="product__price">Q 6,895.33</p>
+    <button class="btn add-to-cart" data-id="p3">Agregar</button>
+  </article>
+
+  <!-- Cable USB-C -->
+  <article class="product card" data-price="149.56" data-name="Cable USB-C">
+    <img
+      src="https://plus.unsplash.com/premium_photo-1669262667978-5d4aafe29dd5?q=80&w=715&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Cable USB-C negro sobre superficie blanca"
+      loading="lazy" decoding="async" />
+    <h3 class="product__title">Cable USB-C</h3>
+    <p class="product__price">Q 149.56</p>
+    <button class="btn add-to-cart" data-id="p4">Agregar</button>
+  </article>
+
+  <!-- Smartwatch -->
+  <article class="product card" data-price="2293.33" data-name="Smartwatch X">
+    <img
+      src="https://images.unsplash.com/photo-1598516802414-50a01bee818d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Reloj inteligente en la muñeca"
+      loading="lazy" decoding="async" />
+    <h3 class="product__title">Smartwatch X</h3>
+    <p class="product__price">Q 2,293.33</p>
+    <button class="btn add-to-cart" data-id="p5">Agregar</button>
+  </article>
+
+  <!-- Teclado mecánico -->
+  <article class="product card" data-price="452.53" data-name="Teclado Mecánico">
+    <img
+      src="https://images.unsplash.com/photo-1617039412398-10d07d621071?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      alt="Teclado mecánico en escritorio"
+      loading="lazy" decoding="async" />
+    <h3 class="product__title">Teclado Mecánico</h3>
+    <p class="product__price">Q 452.53</p>
+    <button class="btn add-to-cart" data-id="p6">Agregar</button>
+  </article>
+</section>
+
+
+      </section>
+      
+    </main>
+
+    <aside id="cartDrawer" class="cart" aria-label="Carrito" aria-hidden="true">
+      <header class="cart__header">
+        <h2>Carrito</h2>
+        <button id="cartClose" class="btn-icon" aria-label="Cerrar carrito">✕</button>
+      </header>
+      <section id="cartItems" class="cart__items" aria-live="polite"></section>
+      <footer class="cart__footer">
+        <div class="cart__row">
+          <span>Total</span>
+          <strong id="cartTotal">Q 0.00</strong>
+        </div>
+        <button id="checkoutBtn" class="btn primary">Comprar</button>
+      </footer>
+    </aside>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; <span id="year"></span> Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+    <button id="toTop" class="to-top" aria-label="Volver arriba">↑</button>
+    <script src="script.js"></script>
+  </body>
+</html>
