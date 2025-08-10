@@ -141,13 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
       card.dataset.date = t.date;
       card.dataset.id = t.id;
       card.dataset.title = t.title;
-      card.innerHTML = \`
+      card.innerHTML = `
         <img src="\${t.img}" alt="\${t.title}" loading="lazy" />
         <h2>\${t.title}</h2>
         <p class="muted">Resumen de la nota.</p>
         <div class="meta">\${t.cat.charAt(0).toUpperCase() + t.cat.slice(1)} · <time datetime="\${t.date}">\${t.date}</time></div>
         <button class="btn read" data-id="\${t.id}">Leer</button>
-      \`;
+      `;
       grid.appendChild(card);
       posts.push(card);
       corpus[t.id] = { title: t.title, body: ['Contenido ampliado simulado para ' + t.title + '.'] };

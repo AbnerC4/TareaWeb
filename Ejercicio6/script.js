@@ -44,10 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.values(state.items).forEach(it => {
       const row = document.createElement('div');
       row.className = 'pedido-item';
-      row.innerHTML = \`
+      row.innerHTML = `
         <span>\${it.name}</span>
         <span>x \${it.qty}</span>
-      \`;
+      `;
       pedidoItems.appendChild(row);
     });
     pedidoDrawer.classList.toggle('open', Object.keys(state.items).length > 0);

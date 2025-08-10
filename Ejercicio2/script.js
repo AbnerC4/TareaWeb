@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       total += it.price * it.qty;
       const row = document.createElement('div');
       row.className = 'cart-item';
-      row.innerHTML = \`
+      row.innerHTML = `
         <img src="\${it.img}" alt="\${it.name}" />
         <div>
           <div class="title">\${it.name}</div>
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <button class="remove" data-act="rm" data-id="\${it.id}" aria-label="Quitar del carrito">✕</button>
-      \`;
+      `;
       cartItems.appendChild(row);
     });
     cartCount.textContent = itemsArr.reduce((a,c) => a + c.qty, 0);
